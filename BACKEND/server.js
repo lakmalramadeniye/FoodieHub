@@ -12,7 +12,13 @@ require("dotenv").config();
 //Define port
 const PORT = process.env.PORT || 8070;
 
-app.use(cors());
+// Enable CORS for a single origin
+const corsOptions = {
+  origin: "https://www.shop.foodiehubofficial.art",
+  credentials: true, // Enable credentials (cookies, authorization headers) for cross-origin requests
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 

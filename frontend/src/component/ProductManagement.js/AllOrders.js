@@ -20,6 +20,7 @@ import {
 } from 'mdb-react-ui-kit';
 import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
+import { HOST_URL } from '../../Constants';
 
 function AllOrders() {
     const [loading, setLoading] = useState(false);
@@ -49,7 +50,9 @@ function AllOrders() {
             id = "Completed"
         }
 
-        const res = await axios.get(`/order/allOrders/` + id).then((res) => {
+        const res = await axios.get(HOST_URL +`/order/allOrders/` + id, {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             setLoading(false)
             setOrders(res.data);
             console.log(res.data)
@@ -74,7 +77,9 @@ function AllOrders() {
 
     const onClickComplete = async (id) => {
         setLoading(true)
-        const res = await axios.get(`/order/sendToDeliver/` + id).then((res) => {
+        const res = await axios.get(HOST_URL +`/order/sendToDeliver/` + id, {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             setLoading(false)
             setStatus(2)
             getOrdersData(2)

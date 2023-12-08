@@ -9,6 +9,7 @@ import LoaderModal from '../common/Loader';
 import hero from '../../Assets/Images/hero-img.png'
 import './home.css'
 import { useSpring, animated } from 'react-spring';
+import { HOST_URL } from '../../Constants';
 
 function Homepage() {
 
@@ -32,7 +33,9 @@ function Homepage() {
 
   const getFormData = async () => {
     setLoading(true)
-    const res = await axios.get("/product/getallproducts").then((res) => {
+    const res = await axios.get(HOST_URL +"/product/getallproducts", {
+      withCredentials: true, // Include credentials (cookies) in the request
+    }).then((res) => {
       setFormData(res.data);
       console.log(res.data)
       setLoading(false)
@@ -44,7 +47,9 @@ function Homepage() {
 
   const getCartData = async () => {
     setLoading(true)
-    const res = await axios.get("/cart/get").then((res) => {
+    const res = await axios.get(HOST_URL +"/cart/get", {
+      withCredentials: true, // Include credentials (cookies) in the request
+    }).then((res) => {
       setCartData(res.data);
       console.log(res.data)
       setLoading(false)
@@ -59,7 +64,9 @@ function Homepage() {
       setLoading(true)
       const cartDetails = { ...product, ...user, productImage: product.image, productID: product._id, selectedQuantity: '1', customerImage: user.image, customerID: user._id, createdDate: moment().format("yyyy-MM-DD[T]HH:mm:ss.SSS[Z]") }
       try {
-        const result = await axios.post("/cart/addCart", cartDetails)
+        const result = await axios.post(HOST_URL +"/cart/addCart", cartDetails, {
+          withCredentials: true, // Include credentials (cookies) in the request
+        })
 
         swal(result.data.message.msgBody);
         getCartData()
@@ -78,7 +85,9 @@ function Homepage() {
   const deleteFromCart = async (id) => {
     try {
       setLoading(true)
-      await axios.delete(`/cart/delete/${id}`)
+      await axios.delete(HOST_URL +`/cart/delete/${id}`, {
+        withCredentials: true, // Include credentials (cookies) in the request
+      })
       getCartData()
 
     } catch (error) {
@@ -99,7 +108,9 @@ function Homepage() {
     else {
       try {
         const update = { selectedQuantity: selectedQuantity }
-        const result = await axios.put(`/cart/updateQuantity/${cartItem._id}`, update)
+        const result = await axios.put(HOST_URL +`/cart/updateQuantity/${cartItem._id}`, update, {
+          withCredentials: true, // Include credentials (cookies) in the request
+        })
         if (result) {
           getCartData()
         }

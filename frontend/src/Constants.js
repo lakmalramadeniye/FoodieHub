@@ -6,3 +6,5 @@ export function getCookie(name) {
     }
     return undefined; // Return undefined when the cookie is not found
 }
+
+export const HOST_URL = "https://www.server.foodiehubofficial.art"

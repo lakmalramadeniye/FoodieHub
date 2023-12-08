@@ -4,6 +4,7 @@ import axios from 'axios';
 import { MDBBadge, MDBBtn, MDBIcon, MDBInput, MDBTable, MDBTableBody, MDBTableHead } from 'mdb-react-ui-kit'
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
+import { HOST_URL } from '../../Constants';
 
 function InventoryList() {
 
@@ -17,7 +18,9 @@ function InventoryList() {
     }, []);
 
     const getFormData = async () => {
-        const res = await axios.get("/product/getallproducts").then((res) => {
+        const res = await axios.get(HOST_URL +"/product/getallproducts", {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             setFormData(res.data);
             console.log(res.data)
         }).catch(err => {
@@ -35,7 +38,9 @@ function InventoryList() {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                axios.delete(`/product/delete/${id}`).then(() => {
+                axios.delete(HOST_URL +`/product/delete/${id}`, {
+                    withCredentials: true, // Include credentials (cookies) in the request
+                  }).then(() => {
 
                     if (willDelete) {
                         swal("The Product has been deleted!",

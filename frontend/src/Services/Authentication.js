@@ -1,11 +1,14 @@
+import { HOST_URL } from "../Constants";
+
 export default {
   login: async user => {
-    const res = await fetch('/user/login', {
+    const res = await fetch(HOST_URL +'/user/login', {
       method: "post",
       body: JSON.stringify(user),
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     });
   
     if (res.status === 200) {
@@ -17,13 +20,17 @@ export default {
     }
   },
   logout: async () => {
-    const res = await fetch('/user/logout');
+    const res = await fetch(HOST_URL +'/user/logout', {
+      credentials: 'include', // Include credentials (cookies) in the request
+    });
     const data = await res.json();
     return data;
   },
 
   isAuthenticated: async () => {
-    const res = await fetch('/user/userauthenticated');
+    const res = await fetch(HOST_URL +'/user/userauthenticated', {
+      credentials: 'include', // Include credentials (cookies) in the request
+    });
     if (res.status === 200)
       return res.json().then(data => data);
 
@@ -31,7 +38,7 @@ export default {
       return { isAuthenticated: false, user: { username: "", role: "" } };
   },
   customerRegistration: async user => {
-    const res = await fetch('/user/customerRegistration', {
+    const res = await fetch(HOST_URL +'/user/customerRegistration', {
       method: "post",
       body: JSON.stringify(user),
       headers: {
@@ -46,12 +53,13 @@ export default {
 
   },
   staffRegistration: async user => {
-    const res = await fetch('/user/staffRegistration', {
+    const res = await fetch(HOST_URL +'/user/staffRegistration', {
       method: "post",
       body: JSON.stringify(user),
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     });
     if (res.status === 200)
       return res.json();
@@ -61,12 +69,13 @@ export default {
 
   },
   userUpdate: async (user, id) => {
-    const res = await fetch(`/user/userupdate/${id}`, {
+    const res = await fetch(HOST_URL +`/user/userupdate/${id}`, {
       method: "put",
       body: JSON.stringify(user),
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     });
     if (res.status === 200)
       return res.json();

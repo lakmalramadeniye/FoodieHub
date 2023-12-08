@@ -20,13 +20,16 @@ import {
 import axios from 'axios';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
+import { HOST_URL } from '../../Constants';
 
 function UserProfile() {
 
     const [user, setUser] = useState([]);
 
     useEffect(() => {
-        axios.get(`/user/userprofile`).then((res) => {
+        axios.get(HOST_URL +`/user/userprofile`, {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             setUser(res.data.data)
             console.log("🚀 ~ file: UserProfile.js:30 ~ axios.get ~ res:", res)
         }).catch((e) => {
@@ -48,7 +51,9 @@ function UserProfile() {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                axios.delete(`/user/delete/${id}/${role}`).then(() => {
+                axios.delete(HOST_URL +`/user/delete/${id}/${role}`, {
+                    withCredentials: true, // Include credentials (cookies) in the request
+                  }).then(() => {
 
                     if (willDelete) {
                         swal("The User has been deleted!",

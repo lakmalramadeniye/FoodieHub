@@ -3,6 +3,7 @@ import Header from '../common/Header'
 import axios from 'axios';
 import { MDBBadge, MDBBtn, MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 'mdb-react-ui-kit'
 import swal from 'sweetalert';
+import { HOST_URL } from '../../Constants';
 
 function AllCustomersScreen() {
 
@@ -14,7 +15,9 @@ function AllCustomersScreen() {
     }, [])
 
     const getUser = async () => {
-        const res = await axios.get('/user/customers').then((res) => {
+        const res = await axios.get(HOST_URL +'/user/customers', {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             setUser(res.data);
             console.log(res.data)
         }).catch(() => {
@@ -37,7 +40,9 @@ function AllCustomersScreen() {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                axios.delete(`/user/delete/${id}/${role}`).then(() => {
+                axios.delete(HOST_URL +`/user/delete/${id}/${role}`, {
+                    withCredentials: true, // Include credentials (cookies) in the request
+                  }).then(() => {
 
                     if (willDelete) {
                         swal("The Customer has been deleted!",

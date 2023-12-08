@@ -18,6 +18,7 @@ import {
     from 'mdb-react-ui-kit';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { HOST_URL } from '../../Constants';
 
 function AddProduct() {
 
@@ -90,7 +91,9 @@ function AddProduct() {
             const updatedFormValue = { ...formValue, image: imageData.url };
 
             // Register the customer with the updated form value
-            await axios.post("/product/addproduct", updatedFormValue)
+            await axios.post(HOST_URL +"/product/addproduct", updatedFormValue, {
+                withCredentials: true, // Include credentials (cookies) in the request
+              })
 
             swal("Product Added Completed");
             setTimeout(() => {

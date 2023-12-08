@@ -19,6 +19,7 @@ import {
 import axios from 'axios';
 import swal from 'sweetalert';
 import { useParams } from 'react-router-dom';
+import { HOST_URL } from '../../Constants';
 
 function UpdateProduct() {
 
@@ -46,7 +47,9 @@ function UpdateProduct() {
     }, []);
 
     const getFormData = async () => {
-        const res = await axios.get("/product/get/" + id).then((res) => {
+        const res = await axios.get(HOST_URL +"/product/get/" + id, {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             let newData = res.data
             setImageData(newData.image)
             newData.image = ""
@@ -125,7 +128,9 @@ function UpdateProduct() {
             const updatedFormValue = { ...formValue, image: newImageData };
 
             // Update the [product] with the updated form value
-            await axios.put(`/product/update/${id}`, updatedFormValue)
+            await axios.put(HOST_URL +`/product/update/${id}`, updatedFormValue, {
+                withCredentials: true, // Include credentials (cookies) in the request
+              })
 
             swal("Update Complete");
             setTimeout(() => {

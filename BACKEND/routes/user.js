@@ -96,7 +96,7 @@ userRouter.route('/staffRegistration').post((req, res) => {
 //logout
 
 userRouter.get('/logout', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.clearCookie('access_token');
+  res.clearCookie('access_token', { domain: '.foodiehubofficial.art', sameSite: 'none', secure: true });
   res.json({ user: { username: "", role: "" }, success: true });
 });
 
@@ -114,7 +114,7 @@ userRouter.post('/login', passport.authenticate('local', { session: false }), (r
     //use http only for prevent client edit cookie using java scripts
     //same site use for cross site scripting prevention
     try {
-      res.cookie('access_token', token, { httpOnly: false, sameSite: 'lax', secure: true, domain: "localhost", path: '/' });
+      res.cookie('access_token', token, { sameSite: 'none', secure: true, domain: ".foodiehubofficial.art" });
       res.status(200).json({ isAuthenticated: true, user: { username, role, _id } });
     } catch (error) {
       console.log(error)

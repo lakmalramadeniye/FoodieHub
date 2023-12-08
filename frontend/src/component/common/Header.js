@@ -18,7 +18,7 @@ import axios from "axios";
 import Authentication from '../../Services/Authentication';
 import swal from "sweetalert";
 import logo from "../../Assets/Icons/logo-white.png";
-import { getCookie } from '../../Constants';
+import { HOST_URL, getCookie } from '../../Constants';
 import { AuthContext } from '../../Context/AuthContext';
 import "./header.css";
 
@@ -43,7 +43,9 @@ export default function Header({ isActive, onGetUser = () => { } }) {
     }, []);
 
     const fetchUser = async () => {
-        const res = await axios.get("/user/userprofile").then((res) => {
+        const res = await axios.get(HOST_URL +"/user/userprofile", {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             console.log(res)
             if (res.status === 200 && res.data.statusCode === "Success") {
                 setUser(res.data.data);

@@ -4,6 +4,7 @@ import { MDBBadge, MDBBtn, MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 
 import axios from "axios";
 import swal from "sweetalert";
 import { Link } from 'react-router-dom';
+import { HOST_URL } from '../../Constants';
 
 function AllUsers() {
 
@@ -18,7 +19,9 @@ function AllUsers() {
     }, [])
 
     const getUser = async () => {
-        const res = await axios.get('/user/alluser').then((res) => {
+        const res = await axios.get(HOST_URL +'/user/alluser', {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then((res) => {
             setUser(res.data);
             console.log(res.data)
         }).catch(() => {
@@ -41,7 +44,9 @@ function AllUsers() {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                axios.delete(`/user/delete/${id}/${role}`).then(() => {
+                axios.delete(HOST_URL +`/user/delete/${id}/${role}`, {
+                    withCredentials: true, // Include credentials (cookies) in the request
+                  }).then(() => {
 
                     if (willDelete) {
                         swal("The User has been deleted!",

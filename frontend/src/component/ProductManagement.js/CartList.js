@@ -19,6 +19,7 @@ import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
 import swal from "sweetalert";
 import LoaderModal from "../common/Loader";
+import { HOST_URL } from "../../Constants";
 
 export default function CartList() {
 
@@ -41,7 +42,9 @@ export default function CartList() {
 
   const getCartData = async () => {
     setLoading(true)
-    const res = await axios.get("/cart/get").then((res) => {
+    const res = await axios.get(HOST_URL +"/cart/get", {
+      withCredentials: true, // Include credentials (cookies) in the request
+    }).then((res) => {
       setLoading(false)
       setCartData(res.data);
       console.log(res.data)
@@ -54,7 +57,9 @@ export default function CartList() {
   const deleteFromCart = async (id) => {
     try {
       setLoading(true)
-      await axios.delete(`/cart/delete/${id}`)
+      await axios.delete(HOST_URL +`/cart/delete/${id}`, {
+        withCredentials: true, // Include credentials (cookies) in the request
+      })
       getCartData()
 
     } catch (error) {
@@ -74,7 +79,9 @@ export default function CartList() {
     else {
       try {
         const update = { selectedQuantity: selectedQuantity }
-        const result = await axios.put(`/cart/updateQuantity/${cartItem._id}`, update)
+        const result = await axios.put(HOST_URL +`/cart/updateQuantity/${cartItem._id}`, update, {
+          withCredentials: true, // Include credentials (cookies) in the request
+        })
         if (result) {
           getCartData()
         }
@@ -106,7 +113,9 @@ export default function CartList() {
         dangerMode: false,
       }).then((ok) => {
         if (ok) {
-          axios.get(`/order/placeOrder`).then(() => {
+          axios.get(HOST_URL +`/order/placeOrder`, {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }).then(() => {
             setLoading(false)
             if (ok) {
               swal("Order Successfully Placed!",
