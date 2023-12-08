@@ -1,13 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "student manegement system",
+  "description": "online food store",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "author": "Damru Ravihara",
+  "author": "Lakmal",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
