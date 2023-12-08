@@ -52,7 +52,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8070",
+  "proxy": "https://www.server.foodiehubofficial.art",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
